@@ -1,0 +1,171 @@
+# 🏦 Loan Risk Prediction System
+
+A production-ready machine learning system that predicts loan approval outcomes using applicant financial and personal data. Built with Python, Scikit-learn, FastAPI, and Docker.
+
+---
+
+## 🚀 Live Demo
+
+```bash
+docker pull loan-api
+docker run -p 8000:8000 loan-api
+```
+
+Then open: `http://localhost:8000/docs`
+
+---
+
+## 📌 Project Overview
+
+Financial institutions face significant risk when approving loans without proper risk assessment. This system provides an intelligent, API-driven tool that analyzes applicant features and predicts loan approval probability — helping banks reduce default risk and improve decision-making efficiency.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Language | Python 3.11 |
+| ML Framework | Scikit-learn |
+| API | FastAPI |
+| Containerization | Docker |
+| Data Processing | Pandas, NumPy |
+| Serialization | Joblib |
+
+---
+
+## 📊 Model Performance
+
+| Model | Training AUC | Testing AUC |
+|---|---|---|
+| Logistic Regression ✅ | 0.699 | **0.875** |
+| Decision Tree | 1.000 | 0.698 |
+| KNN | 0.622 | 0.517 |
+
+**Selected model:** Logistic Regression — best generalization with 87.5% AUC on test set.
+
+Final accuracy on test set: **93.3%**
+
+---
+
+## 📁 Project Structure
+
+```
+loan-risk-prediction/
+│
+├── app/
+│   └── Main.py          # FastAPI application & prediction endpoint
+│
+├── notebook/
+│   └── training.ipynb   # Data analysis, preprocessing & model training
+│
+├── model/
+│   └── loan_model.pkl   # Serialized trained model
+│
+├── data/
+│   └── loan.csv         # Dataset
+│
+├── Dockerfile
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 🔌 API Endpoints
+
+### `GET /`
+Health check endpoint.
+
+**Response:**
+```json
+{"message": "Loan Risk Prediction API"}
+```
+
+---
+
+### `POST /predict`
+Predict loan approval for an applicant.
+
+**Request body:**
+```json
+{
+  "Gender": 1,
+  "Married": 1,
+  "Dependents": 0.0,
+  "Education": 0,
+  "Self_Employed": 0,
+  "ApplicantIncome": 5000,
+  "CoapplicantIncome": 1500.0,
+  "LoanAmount": 120.0,
+  "Loan_Amount_Term": 360.0,
+  "Credit_History": 1.0,
+  "Property_Area": 2
+}
+```
+
+**Response:**
+```json
+{"loan_approval_prediction": "Approved"}
+```
+
+---
+
+## ⚙️ Installation & Usage
+
+### Option 1 — Docker (Recommended)
+
+```bash
+# Build the image
+docker build -t loan-api .
+
+# Run the container
+docker run -p 8000:8000 loan-api
+```
+
+### Option 2 — Local
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the API
+uvicorn Main:app --reload
+```
+
+---
+
+## 📦 Dataset Features
+
+| Feature | Description |
+|---|---|
+| Gender | Male / Female |
+| Married | Marital status |
+| Dependents | Number of dependents |
+| Education | Graduate / Not Graduate |
+| Self_Employed | Employment type |
+| ApplicantIncome | Monthly income |
+| CoapplicantIncome | Co-applicant income |
+| LoanAmount | Requested loan amount |
+| Loan_Amount_Term | Loan term in months |
+| Credit_History | Credit history record |
+| Property_Area | Urban / Semi-urban / Rural |
+
+---
+
+## 🧠 ML Pipeline
+
+1. **Data Loading** — Load raw CSV dataset
+2. **EDA** — Explore distributions and correlations
+3. **Preprocessing** — Label encoding for categorical features
+4. **Missing Value Imputation** — Mean imputation strategy
+5. **Model Selection** — Compare Logistic Regression, Decision Tree, KNN
+6. **Training** — Train best model on 95% of data
+7. **Evaluation** — AUC-ROC and accuracy metrics
+8. **Serialization** — Save model with Joblib for API deployment
+
+---
+
+## 📄 License
+
+MIT License — feel free to use and modify.
